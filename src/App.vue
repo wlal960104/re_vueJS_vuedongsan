@@ -1,13 +1,6 @@
 <template>
-
-   <!-- 모달창 영역 -->
-  <div class="black-bg" v-if="isModal === true">
-    <div class="white-bg">
-      <h4>상세페이지</h4>
-      <p>상세페이지내용임</p>
-      <button @click="isModal=false">닫기</button>
-    </div>
-  </div>
+  <!-- 모달창 영역 -->
+  <Modal @closeModal="isModal = false" :prodList="prodList" :prodId="prodId" :isModal="isModal"/>
   <!-- // 모달창 영역 끝 -->
 
   <!-- 상단 메뉴 -->
@@ -16,17 +9,25 @@
   </div>
   <!-- // 상단 메뉴 끝 -->
 
-  <div v-for="(a,i) in prodList" :key="i">
-    <img :src="`${a.image}`" alt="room_img" class="room-img">
-    <h4 @click="isModal = true">{{a.title}}</h4>
-    <p>{{a.price}}원</p>
-    <button @click="increase(i)">허위매물신고</button><br>
-    <span>신고수 : {{count[i]}}</span>
-  </div>
+  <!-- 할인 배너 영역 -->
+  <Discount/>
+
+  <!-- 상품 리스트 영역 -->
+  <Card @openModal="isModal = true; prodId = $event" v-for="(prodData,i) in prodList" :key="i" :prodData="prodData" :count="count[i]"/>
+  <!--<div v-for="(a,i) in prodList" :key="i">-->
+  <!--  <img :src="a.image" alt="room_img" class="room-img">-->
+  <!--  <h4 @click="isModal = true; prodId = i;">{{a.title}}</h4>-->
+  <!--  <p>{{a.price}}원</p>-->
+  <!--  <button @click="increase(i)">허위매물신고</button><br>-->
+  <!--  <span>신고수 : {{count[i]}}</span>-->
+  <!--</div>-->
 </template>
 
 <script>
 import prodList from './assets/prodData.js'
+import Discount from "./components/Discount.vue";
+import Modal from "./components/Modal.vue";
+import Card from "@/components/Card.vue";
 
 export default {
   name: 'App',
@@ -34,9 +35,10 @@ export default {
   data() {
     return {
       menu : ['Home', 'Shop', 'About'],
-      count : [0,0,0],
+      count : [0,0,0,0,0,0], // 신고 수
       isModal : false,
-      prodList // 부동산 데이터들
+      prodList, // 부동산 데이터들
+      prodId : 0, // 상품 id
     }
   },
   methods: {
@@ -46,7 +48,9 @@ export default {
     }
   },
   components: {
-
+    Discount : Discount, // Discount 로 축약 가능 (ES6 문법)
+    Modal : Modal, // Modal 로 축약 가능 (ES6 문법)
+    Card
   }
 }
 </script>
@@ -87,5 +91,11 @@ div {
 .room-img {
   width: 100%;
   margin-top: 40px;
+}
+.discount {
+  background: #eee;
+  padding: 10px;
+  margin: 10px;
+  border-radius: 5px;
 }
 </style>
