@@ -5,8 +5,8 @@
     <!--<h4 @click="isModal = true; prodId = i;">{{prodData.title}}</h4>-->
     <h4 @click="openModal">{{prodData.title}}</h4>
     <p>{{prodData.price}}원</p>
-    <!--<button @click="increase(i)">허위매물신고</button><br>-->
-    <!--<span>신고수 : {{count[i]}}</span>-->
+    <button @click="report">허위매물신고</button><br>
+    <span>신고수 : {{count}}</span>
   </div>
 </template>
 
@@ -19,8 +19,13 @@ export default {
 
   },
   methods : {
+    // 모달창 열기
     openModal() {
       this.$emit('openModal', this.prodData.id)
+    },
+    // [허위매물신고] 버튼 클릭
+    report() {
+      this.$emit('report', this.prodData.id)
     }
   }
 }

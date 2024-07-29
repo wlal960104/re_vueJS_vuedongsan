@@ -13,14 +13,8 @@
   <Discount/>
 
   <!-- 상품 리스트 영역 -->
-  <Card @openModal="isModal = true; prodId = $event" v-for="(prodData,i) in prodList" :key="i" :prodData="prodData" :count="count[i]"/>
-  <!--<div v-for="(a,i) in prodList" :key="i">-->
-  <!--  <img :src="a.image" alt="room_img" class="room-img">-->
-  <!--  <h4 @click="isModal = true; prodId = i;">{{a.title}}</h4>-->
-  <!--  <p>{{a.price}}원</p>-->
-  <!--  <button @click="increase(i)">허위매물신고</button><br>-->
-  <!--  <span>신고수 : {{count[i]}}</span>-->
-  <!--</div>-->
+  <Card @report="increase($event)" @openModal="isModal = true; prodId = $event" v-for="(prodData,i) in prodList"
+        :key="i" :prodData="prodData" :count="count[i]"/>
 </template>
 
 <script>
@@ -42,6 +36,7 @@ export default {
     }
   },
   methods: {
+    // [허위매물신고] 버튼 클릭 시 신고 수 증가
     increase(i) {
       // 함수 내용 입력
       this.count[i]++;
