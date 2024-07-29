@@ -1,7 +1,6 @@
 <template>
   <!-- 모달창 영역 -->
   <Modal @closeModal="isModal = false" :prodList="prodList" :prodId="prodId" :isModal="isModal"/>
-  <!-- // 모달창 영역 끝 -->
 
   <!-- 상단 메뉴 -->
   <div class="menu">
@@ -12,6 +11,7 @@
   <!-- 할인 배너 영역 -->
   <Discount/>
 
+  <!-- 여기 영역만 라우터로 뚫기 -->
   <!-- 상품 리스트 영역 -->
   <Card @report="increase($event)" @openModal="isModal = true; prodId = $event" v-for="(prodData,i) in prodList"
         :key="i" :prodData="prodData" :count="count[i]"/>
@@ -29,7 +29,7 @@ export default {
   data() {
     return {
       menu : ['Home', 'Shop', 'About'],
-      count : [0,0,0,0,0,0], // 신고 수
+      count : [], // 신고 수
       isModal : false,
       prodList, // 부동산 데이터들
       prodId : 0, // 상품 id
@@ -46,6 +46,13 @@ export default {
     Discount : Discount, // Discount 로 축약 가능 (ES6 문법)
     Modal : Modal, // Modal 로 축약 가능 (ES6 문법)
     Card
+  },
+  // 화면 랜딩 되기전 데이터 셋팅
+  created() {
+    // 신고 수 초기화 (모두 0으로 초기화), DB 사용 시 초기화 불필요!
+    this.prodList.forEach(() => {
+      this.count.push(0);
+    });
   }
 }
 </script>
