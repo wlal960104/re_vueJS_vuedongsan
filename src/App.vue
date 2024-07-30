@@ -1,9 +1,8 @@
 <template>
   <!-- 모달창 영역 -->
-  <div class="start" :class="{ end : isModal }">
+  <transition name="fade">
     <Modal @closeModal="isModal = false" :prodList="prodList" :prodId="prodId" :isModal="isModal"/>
-  </div>
-
+  </transition>
   <!-- 상단 메뉴 -->
   <div class="menu">
     <a v-for="a in menu" :key="a">{{a}}</a> <!-- Home 3개 출력 -->
@@ -102,11 +101,29 @@ div {
   margin: 10px;
   border-radius: 5px;
 }
-.start {
+/* 시작 시 스타일 */
+.fade-enter-from {
   opacity: 0;
+}
+.fade-enter-active {
   transition: all 1s;
 }
-.end {
+/* 끝날 시 스타일 */
+.fade-enter-to {
   opacity: 1;
 }
+
+/* 시작 시 스타일 */
+.fade-leave-from {
+  opacity: 1;
+}
+.fade-leave-active {
+  transition: all 1s;
+}
+/* 끝날 시 스타일 */
+.fade-leave-to {
+  opacity: 0;
+}
+
+
 </style>
