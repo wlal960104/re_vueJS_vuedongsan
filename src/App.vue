@@ -1,6 +1,8 @@
 <template>
   <!-- 모달창 영역 -->
-  <Modal @closeModal="isModal = false" :prodList="prodList" :prodId="prodId" :isModal="isModal"/>
+  <div class="start" :class="{ end : isModal }">
+    <Modal @closeModal="isModal = false" :prodList="prodList" :prodId="prodId" :isModal="isModal"/>
+  </div>
 
   <!-- 상단 메뉴 -->
   <div class="menu">
@@ -99,5 +101,12 @@ div {
   padding: 10px;
   margin: 10px;
   border-radius: 5px;
+}
+.start {
+  opacity: 0;
+  transition: all 1s;
+}
+.end {
+  opacity: 1;
 }
 </style>

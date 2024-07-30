@@ -33,8 +33,9 @@ export default {
       //   this.month = 12;
       //   return alert('12개월을 초과할 수 없습니다');
       // }
-      console.log('typeof a >>', typeof a)
-      // 문자 입력 불가
+
+      // 문자 입력 불가 (한글 모음, 자음 인식 불가)
+      // TODO: 개선 필요
       if ( a !== '' && (typeof a === 'string')) {
         this.month = 1;
         alert('숫자만 입력 가능합니다.');
