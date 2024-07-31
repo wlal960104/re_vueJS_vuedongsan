@@ -25,7 +25,15 @@ export default {
     report() {
       this.$emit('report', this.prodData.id)
     }
+  },
+  created() {
+    console.log('Card.vue ::: created > ')
+
+  },
+  mounted() {
+    console.log('Card.vue ::: mounted > ')
   }
+
 }
 </script>
 

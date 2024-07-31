@@ -41,7 +41,24 @@ export default {
         alert('숫자만 입력 가능합니다.');
       }
     }
+  },
+  created() {
+    console.log('Modal.vue ::: created > ')
+
+  },
+  mounted() {
+    console.log('Modal.vue ::: mounted > ')
+
+  },
+  beforeUpdate() {
+    console.log('Modal.vue ::: beforeUpdate > ')
+    console.log('this >>>', this);
+    if (this.month === 2) {
+      alert('2개월은 입력 불가합니다.');
+      this.month = 3;
+    }
   }
+
 }
 </script>
 

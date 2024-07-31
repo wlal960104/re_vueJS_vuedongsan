@@ -12,6 +12,9 @@
   <!-- 할인 배너 영역 -->
   <Discount/>
 
+  <button @click="priceSort">가격순 정렬</button>
+  <button @click="sortBack">되돌리기</button>
+
   <!-- 여기 영역만 라우터로 뚫기 -->
   <!-- 상품 리스트 영역 -->
   <Card @report="increase($event)" @openModal="isModal = true; prodId = $event" v-for="(prodData,i) in prodList"
@@ -23,17 +26,26 @@ import prodList from './assets/prodData.js'
 import Discount from "./components/Discount.vue";
 import Modal from "./components/Modal.vue";
 import Card from "@/components/Card.vue";
+import discount from "@/components/Discount.vue";
 
 export default {
   name: 'App',
+  computed: {
+    discount() {
+      return discount
+    }
+  },
   // 데이터 저장 공간 (= state)
   data() {
     return {
       menu : ['Home', 'Shop', 'About'],
       count : [], // 신고 수
       isModal : false,
-      prodList, // 부동산 데이터들
+      originProdList : [...prodList], // 부동산 데이터 원본
+      prodList : [...prodList], // 부동산 데이터들
       prodId : 0, // 상품 id
+      showDiscount : true,
+      discountNum : 20, // 할인률
     }
   },
   methods: {
@@ -41,6 +53,16 @@ export default {
     increase(i) {
       // 함수 내용 입력
       this.count[i]++;
+    },
+    // 가격 정렬 기능
+    priceSort() {
+      this.prodList.sort(function(a,b) {
+        return a.price -b.price;
+      });
+    },
+    // 되돌리기 버튼 클릭 시
+    sortBack() {
+      this.prodList = [...this.originProdList];
     }
   },
   components: {
@@ -50,11 +72,18 @@ export default {
   },
   // 화면 랜딩 되기전 데이터 셋팅
   created() {
+    console.log('App.vue ::: created > ')
     // 신고 수 초기화 (모두 0으로 초기화), DB 사용 시 초기화 불필요!
     this.prodList.forEach(() => {
       this.count.push(0);
     });
+  },
+  mounted() {
+    console.log('App.vue ::: mounted > ')
+
+
   }
+
 }
 </script>
 
